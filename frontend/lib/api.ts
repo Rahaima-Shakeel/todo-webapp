@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'https://todo-app-nu-woad.vercel.app';
 
 // Create axios instance
 const apiClient: AxiosInstance = axios.create({
@@ -46,12 +46,12 @@ export const authAPI = {
     const response = await apiClient.post('/api/auth/signup', { email, password, name });
     return response.data;
   },
-  
+
   login: async (email: string, password: string) => {
     const response = await apiClient.post('/api/auth/login', { email, password });
     return response.data;
   },
-  
+
   getMe: async () => {
     const response = await apiClient.get('/api/auth/me');
     return response.data;
@@ -86,31 +86,31 @@ export const taskAPI = {
     if (filter) params.filter = filter;
     if (sortBy) params.sort_by = sortBy;
     if (search) params.search = search;
-    
+
     const response = await apiClient.get('/api/tasks', { params });
     return response.data;
   },
-  
+
   getTask: async (taskId: string): Promise<Task> => {
     const response = await apiClient.get(`/api/tasks/${taskId}`);
     return response.data;
   },
-  
+
   createTask: async (task: TaskCreate): Promise<Task> => {
     const response = await apiClient.post('/api/tasks', task);
     return response.data;
   },
-  
+
   updateTask: async (taskId: string, task: TaskUpdate): Promise<Task> => {
     const response = await apiClient.put(`/api/tasks/${taskId}`, task);
     return response.data;
   },
-  
+
   toggleComplete: async (taskId: string): Promise<Task> => {
     const response = await apiClient.patch(`/api/tasks/${taskId}/complete`);
     return response.data;
   },
-  
+
   deleteTask: async (taskId: string): Promise<void> => {
     await apiClient.delete(`/api/tasks/${taskId}`);
   },
